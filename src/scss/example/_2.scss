@@ -114,16 +114,36 @@
 // //     error:tomato,
 // //     info:lightblue
 // // )
-
-@mixin hover{
-    &:not([#{$state}]):hover{
-        @content;
+@use "sass:meta";
+@mixin btn-type($types...) {
+    // $types: (
+    //   $success: lightgreen,
+    //   $error: tomato,
+    //   $info: lightblue,
+    // );
+  
+    @each $name, $color in meta.keywords($types) {
+      .btn-#{$name} {
+        border: 2px solid $color;
+        color: $color;
+      }
     }
-}
-.button{
-    background-color: 1px solid darkblue;
-    @include hover($state:disabled){
-        color:white;
-        background-color: darkblue;
-    };
-}
+  }
+  
+  @include btn-type($success: lightgreen, $error: tomato, $info: lightblue);
+  
+  @mixin hover($state) {
+    &:not([#{$state}]):hover {
+      @content;
+    }
+  }
+  
+  .button {
+    background-color: white;
+    border: 1px solid darkblue;
+  
+    @include hover($state: disabled) {
+      color: white;
+      background-color: darkblue;
+    }
+  }
