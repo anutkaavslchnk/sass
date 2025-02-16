@@ -2,3 +2,5 @@
 @use "base";
 @use "layout";
 @use "components";
+@use "example/2" as example2;
+@use "example";
